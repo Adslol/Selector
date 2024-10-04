@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Selection</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        button { padding: 10px 20px; margin: 20px; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>Random Selection</h1>
+<button id="selectButton">Select Random Option</button>
+<div id="result"></div>
+
+<script>
+    const options = ["Saraswati", "Renuka", "Bhavani", "Mahalaxmi"];
+    const maxCount = 25;
+    let counts = Array(options.length).fill(0);
+    let selections = [];
+
+    document.getElementById("selectButton").addEventListener("click", () => {
+        if (selections.length >= options.length * maxCount) {
+            document.getElementById("result").innerText = "Maximum selections reached!";
+            return;
+        }
+
+        let availableOptions = options.filter((_, index) => counts[index] < maxCount);
+        
+        if (availableOptions.length === 0) {
+            document.getElementById("result").innerText = "All options exhausted!";
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * availableOptions.length);
+        const selectedOption = availableOptions[randomIndex];
+        const optionIndex = options.indexOf(selectedOption);
+
+        counts[optionIndex]++;
+        selections.push(selectedOption);
+
+        document.getElementById("result").innerText = `Selected: ${selectedOption}`;
+        console.log(`Counts: ${counts}`);
+    });
+</script>
+
+</body>
+</html>
